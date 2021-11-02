@@ -78,7 +78,7 @@ const UserListItem = (props) => {
         <User editEmpData={editEmp} editEmployee={editEmployee} />
       )}
       {/* {state && <User />} */}
-      <div className="flex w-1/6">
+      <div className="flex w-1/5">
         <Typography variant="subtitle1">{user.firstName}</Typography>
 
         <Typography variant="subtitle1" className="">
@@ -91,7 +91,7 @@ const UserListItem = (props) => {
         <Typography variant="subtitle1">{user.email}</Typography>
       </div>
 
-      <div className="flex w-1/6">
+      <div className="flex  w-1/5">
         <Typography
           variant="subtitle1"
           component="span"
@@ -103,7 +103,7 @@ const UserListItem = (props) => {
       </div>
 
       <div
-        className="flex w-1/6"
+        className="flex  w-1/5"
         // style={{ width: "10%" }}
       >
         <Tooltip title="Edit ">

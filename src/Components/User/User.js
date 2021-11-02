@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   overlay: {
     opacity: 0.5,
   },
+  card: {
+    boxShadow: "5px 5px 10px black",
+  },
 }));
 
 const Form = (props) => {
@@ -72,8 +75,8 @@ const Form = (props) => {
   console.log("props ", props);
   const classes = useStyles();
   return (
-    <Paper elevation={5} className="flex justify-center p-4">
-      <Card className="flex" elevation={3}>
+    <Paper elevation={6} className={"flex justify-center p-4"}>
+      <Card className={`flex ${classes.card}`} elevation={6}>
         <form onSubmit={handleSubmit} style={{ width: "600px" }}>
           {/* <div>General Information</div> */}
 

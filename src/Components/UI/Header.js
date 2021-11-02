@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Box, Link } from "@material-ui/core";
+import { Box, Icon, Link } from "@material-ui/core";
 import SimpleDialog from "./Dialog";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
@@ -14,6 +14,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logout } from "../../store/Action/UserActions";
+import Add from "@material-ui/icons/Add";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -122,11 +124,11 @@ const Header = (props) => {
               history.push("/add");
             }}
           >
-            Add Employee
+            <Add /> Employee
           </Link>
         )}
         {isLoggedIn && (
-          <Button
+          <IconButton
             variant="contained"
             className={` ${classes.link}`}
             color="secondary"
@@ -135,8 +137,8 @@ const Header = (props) => {
               history.push("/register");
             }}
           >
-            Logout
-          </Button>
+            <Icon color="action">logout</Icon>
+          </IconButton>
         )}
       </Toolbar>
       {/* {combinedSate.isLoginOpen && (
