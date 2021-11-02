@@ -11,12 +11,17 @@ import { bindActionCreators } from "redux";
 // import { login } from "../../store/Action/UserActions";
 import { login } from "../../store/Action/UserActions";
 import { useHistory } from "react-router-dom";
+import { Box } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { register } from "../../store/Action/UserActions";
 import * as Yup from "yup";
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    // width: "600px",
+    // flexGrow: 1,
+
+    // width: "600px",]
+    display: "flex",
+    justifyContent: "center",
   },
   paper: {
     padding: theme.spacing(2),
@@ -24,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    padding: theme.spacing(0.5),
-    margin: theme.spacing(1),
+    margin: "5px",
+    padding: "5px",
   },
   // btnGroup: {
   //   bottom: "10px",
@@ -48,90 +53,111 @@ const Register = (props) => {
 
   return (
     <Paper className={classes.root}>
-      <div className="flex-col sm:flex-row justify-center m-5 p-5">
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "600px", margin: "auto" }}
+      <div
+        className="flex-col sm:flex-row justify-center m-5 p-5"
+        // style={{ width: "600px" }}
+      >
+        <div
+          className=""
+          style={{
+            boxShadow: "3px 3px 10px black",
+            padding: "50px",
+            margin: "40px auto",
+            width: "600px",
+            boxSizing: "border-box",
+          }}
         >
-          <div className="flex-col sm:flex-row m-5 ">
-            <TextField
-              type="text"
-              id="name"
-              label="name"
-              variant="outlined"
-              fullWidth
-              required
-              name="name"
-              error={touched.name && !!errors.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              helperText={touched.name && !!errors.name && errors.name}
-            />
-          </div>
-          <div className="flex-col sm:flex-row m-5 ">
-            <TextField
-              id="outlined-basic"
-              label="email"
-              variant="outlined"
-              fullWidth
-              required
-              name="email"
-              error={touched.email && !!errors.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              helperText={touched.email && !!errors.email && errors.email}
-            />
-          </div>
-          <div className="flex-col sm:flex-row m-5">
-            {isSubmitting && (
-              <div className="relative inset-x-1/2 bottom-1/4  flex flex-row w-full justify-center items-center m-8">
-                <CircularProgress color="secondary" />
-              </div>
-            )}
-          </div>
-          <div className="flex-col sm:flex-row m-5">
-            <TextField
-              id="outlined-basic"
-              label="password"
-              variant="outlined"
-              name="password"
-              type="password"
-              error={touched.password && !!errors.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              fullWidth
-              required
-              helperText={
-                touched.password && !!errors.password && errors.password
-              }
-            />
-          </div>
-          <div className="flex-col sm:flex-row m-2 ">
-            <ButtonGroup className={`m-1`}>
-              <Button
-                color="primary"
-                className="m-4"
-                variant="contained"
-                type="submit"
-                disabled={!dirty || isSubmitting || !isValid}
-              >
-                register
-              </Button>
-              <Button
-                color="secondary"
-                className="m-4"
-                variant="contained"
-                type="reset"
-                onClick={() => {}}
-              >
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </div>
-        </form>
+          {
+            <Box fontWeightBold>
+              <Typography align={"center"} component={"h2"}>
+                Register Here
+              </Typography>
+            </Box>
+          }
+          <form
+            onSubmit={handleSubmit}
+            // style={{ width: "600px", margin: "auto" }}
+          >
+            <div className="flex-col sm:flex-row m-5 ">
+              <TextField
+                type="text"
+                id="name"
+                label="name"
+                variant="outlined"
+                fullWidth
+                required
+                name="name"
+                error={touched.name && !!errors.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+                helperText={touched.name && !!errors.name && errors.name}
+              />
+            </div>
+            <div className="flex-col sm:flex-row m-5 ">
+              <TextField
+                id="outlined-basic"
+                label="email"
+                variant="outlined"
+                fullWidth
+                required
+                name="email"
+                error={touched.email && !!errors.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                helperText={touched.email && !!errors.email && errors.email}
+              />
+            </div>
+            <div className="flex-col sm:flex-row m-5">
+              {isSubmitting && (
+                <div className="relative inset-x-1/2 bottom-1/4  flex flex-row w-full justify-center items-center m-8">
+                  <CircularProgress color="secondary" />
+                </div>
+              )}
+            </div>
+            <div className="flex-col sm:flex-row m-5">
+              <TextField
+                id="outlined-basic"
+                label="password"
+                variant="outlined"
+                name="password"
+                type="password"
+                error={touched.password && !!errors.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                fullWidth
+                required
+                helperText={
+                  touched.password && !!errors.password && errors.password
+                }
+              />
+            </div>
+            <div className="flex justify-center m-2 ">
+              <ButtonGroup className={`m-1`}>
+                <Button
+                  color="primary"
+                  className={`${classes.button}`}
+                  variant="contained"
+                  type="submit"
+                  disabled={!dirty || isSubmitting || !isValid}
+                >
+                  register
+                </Button>
+                <Button
+                  color="secondary"
+                  className={`${classes.button}`}
+                  variant="contained"
+                  type="reset"
+                  onClick={() => {}}
+                >
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </div>
+          </form>
+        </div>
       </div>
     </Paper>
   );

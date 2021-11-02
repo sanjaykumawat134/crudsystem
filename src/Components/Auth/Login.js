@@ -1,4 +1,10 @@
-import { CircularProgress, emphasize, Paper } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  emphasize,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -23,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    padding: theme.spacing(0.5),
-    margin: theme.spacing(1),
+    margin: "5px",
+    padding: "5px",
   },
   // btnGroup: {
   //   bottom: "10px",
@@ -46,78 +52,96 @@ const Login = (props) => {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
-      <div className="flex-col sm:flex-row justify-center m-5 p-5">
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "600px", margin: "auto" }}
+    <div className={classes.root}>
+      <Paper
+        className="flex-col sm:flex-row justify-center m-5 p-5"
+        elevation={6}
+      >
+        <div
+          className=""
+          style={{
+            boxShadow: "3px 3px 10px black",
+            padding: "50px",
+            margin: "40px auto",
+            width: "600px",
+            boxSizing: "border-box",
+          }}
         >
-          <div className="flex-col sm:flex-row m-5 ">
-            <TextField
-              id="outlined-basic"
-              label="email"
-              variant="outlined"
-              fullWidth
-              required
-              name="email"
-              error={touched.email && !!errors.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              helperText={touched.email && !!errors.email && errors.email}
-            />
-          </div>
+          {
+            <Box fontWeightBold>
+              <Typography align={"center"} component={"h2"}>
+                Login Here
+              </Typography>
+            </Box>
+          }
+          <form onSubmit={handleSubmit}>
+            <div className="flex-col sm:flex-row m-5 ">
+              <TextField
+                id="outlined-basic"
+                label="email"
+                variant="outlined"
+                fullWidth
+                required
+                name="email"
+                error={touched.email && !!errors.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                helperText={touched.email && !!errors.email && errors.email}
+              />
+            </div>
 
-          <div className="flex-col sm:flex-row m-5">
-            <TextField
-              id="outlined-basic"
-              label="password"
-              variant="outlined"
-              name="password"
-              type="password"
-              error={touched.password && !!errors.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              fullWidth
-              required
-              helperText={
-                touched.password && !!errors.password && errors.password
-              }
-            />
-          </div>
-          <div className="flex-col sm:flex-row ">
-            {isSubmitting && (
-              <div className="flex flex-row w-full justify-center ">
-                <CircularProgress color="secondary" />
-              </div>
-            )}
-          </div>
-          <div className="flex m-2 justify-center">
-            <ButtonGroup className={`m-1`}>
-              <Button
-                color="primary"
-                className="m-4"
-                variant="contained"
-                type="submit"
-                disabled={!dirty || isSubmitting || !isValid}
-              >
-                Login
-              </Button>
-              <Button
-                color="secondary"
-                className="m-4"
-                variant="contained"
-                type="reset"
-                onClick={() => {}}
-              >
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </div>
-        </form>
-      </div>
-    </Paper>
+            <div className="flex-col sm:flex-row m-5">
+              <TextField
+                id="outlined-basic"
+                label="password"
+                variant="outlined"
+                name="password"
+                type="password"
+                error={touched.password && !!errors.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                fullWidth
+                required
+                helperText={
+                  touched.password && !!errors.password && errors.password
+                }
+              />
+            </div>
+            <div className="flex-col sm:flex-row ">
+              {isSubmitting && (
+                <div className="flex flex-row w-full justify-center ">
+                  <CircularProgress color="secondary" />
+                </div>
+              )}
+            </div>
+            <div className="flex m-2 justify-center">
+              <ButtonGroup className={`m-1`}>
+                <Button
+                  color="primary"
+                  className={`${classes.button}`}
+                  variant="contained"
+                  type="submit"
+                  disabled={!dirty || isSubmitting || !isValid}
+                >
+                  Login
+                </Button>
+                <Button
+                  color="secondary"
+                  className={`${classes.button}`}
+                  variant="contained"
+                  type="reset"
+                  onClick={() => {}}
+                >
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </div>
+          </form>
+        </div>
+      </Paper>
+    </div>
   );
 };
 const EnhancedLoginForm = withFormik({

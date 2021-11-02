@@ -458,9 +458,21 @@ const UserForm = withFormik({
   }),
 
   handleSubmit: async (values, { setSubmitting, props }) => {
-    setSubmitting(true);
-    await props.addEmployee(values);
-    setSubmitting(false);
+    try {
+      setSubmitting(true);
+      // console.log("props gg", props);
+      if (props.editEmpData) {
+        console.log("inside edit");
+        await props.editEmployee(props.editEmpData._id, values);
+
+        // return;
+      } else {
+        await props.addEmployee(values);
+      }
+      setSubmitting(false);
+    } catch (error) {
+      console.log("Error", error);
+    }
   },
 
   displayName: "BasicForm",

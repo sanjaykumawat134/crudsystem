@@ -1,5 +1,5 @@
 import User from "../User/User";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import UserList from "../User/UserList";
@@ -10,7 +10,9 @@ const Main = (props) => {
   const { isLoggedIn, editEmp } = props;
   return (
     <Switch>
-      <Route path="/" exact="/"></Route>
+      <Route path="/" exact="/">
+        <Redirect to="/login" />
+      </Route>
       {!isLoggedIn && (
         <Route path="/login">
           <Login history={history} />

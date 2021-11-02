@@ -52,14 +52,20 @@ const useStyles = makeStyles((theme) => ({
 const UserListItem = (props) => {
   const classes = useStyles();
   const [state, setstate] = useState(false);
-  const { user, deleteEmployee, getAddtionalData, editEmp, isDialogOpen } =
-    props;
+  const {
+    user,
+    deleteEmployee,
+    getAddtionalData,
+    editEmp,
+    isDialogOpen,
+    editEmployee,
+  } = props;
   // console.log("props", deleteEmployee);
   const deleteEmpHandler = (eid) => async () => {
     await deleteEmployee(eid);
   };
   const editEmpHandler = (empId) => async () => {
-    console.log("edit handler");
+    // console.log("edit handler");
     await getAddtionalData(empId);
     setstate(true);
   };
@@ -68,7 +74,9 @@ const UserListItem = (props) => {
       key={user.id}
       className={` sm:flex-nowrap flex-wrap  items-center text-gray-800 text-base border-2 m-6 font-medium  ${classes.datarow} ${classes.data} ${classes.root}`}
     >
-      {isDialogOpen && <User editEmpData={editEmp} />}
+      {isDialogOpen && (
+        <User editEmpData={editEmp} editEmployee={editEmployee} />
+      )}
       {/* {state && <User />} */}
       <div className="flex w-1/6">
         <Typography variant="subtitle1">{user.firstName}</Typography>

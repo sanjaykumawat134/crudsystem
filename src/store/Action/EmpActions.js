@@ -87,9 +87,23 @@ export const getAddtionalData = (empId) => {
     }
   };
 };
-export const editEmployee = (empId, updatedData) => {
+export const editEmployee = (empId, data) => {
   return async (dispatch, getState) => {
     try {
+      const token = getAuthToken();
+      const resp = await axios.put(
+        `http://localhost:3000/emp/edit`,
+        { data },
+        {
+          params: {
+            id: empId,
+          },
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("patch", resp);
     } catch (error) {}
   };
 };

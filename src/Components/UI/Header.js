@@ -27,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     padding: "6px",
   },
+  link: {
+    color: "white",
+    margin: "0 5px",
+    textDecoration: "none",
+  },
 }));
 
 const Header = (props) => {
@@ -52,92 +57,88 @@ const Header = (props) => {
   const history = useHistory();
   const { isLoggedIn } = props;
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Employee system
-          </Typography>
-          {/* <Button color="inherit" onClick={loginHandler}>
+    <AppBar position="static" color={"transparent"}>
+      <Toolbar className="bg-blue-500">
+        <IconButton
+          edge="start"
+          // className="text-white"
+          style={{ color: "white" }}
+          color="inherit"
+          aria-label="menu"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" className={`${classes.title} text-white  `}>
+          Employee system
+        </Typography>
+        {/* <Button color="inherit" onClick={loginHandler}>
             Login
           </Button>
           <Button color="inherit" onClick={registerHandler}>
             Register
           </Button> */}
-          {!isLoggedIn && (
-            <Link
-              className="mx-3"
-              component="button"
-              variant="button"
-              color="secondary"
-              onClick={() => {
-                history.push("/login");
-              }}
-            >
-              Login
-            </Link>
-          )}
-
+        {/* {!isLoggedIn && (
           <Link
+            className={`mx-3 ${classes.link}`}
             component="button"
-            className="mx-"
+            variant="button"
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
+            Login
+          </Link> */}
+        {/* )} */}
+
+        <Link
+          component="button"
+          className={` ${classes.link}`}
+          variant="button"
+          onClick={() => {
+            history.push("/users");
+          }}
+        >
+          Users
+        </Link>
+        {!isLoggedIn && (
+          <Link
+            className={` ${classes.link}`}
+            component="button"
+            variant="button"
+            onClick={() => {
+              history.push("/register");
+            }}
+          >
+            Register
+          </Link>
+        )}
+        {isLoggedIn && (
+          <Link
+            className={` ${classes.link}`}
+            component="button"
             variant="button"
             color="secondary"
             onClick={() => {
-              history.push("/users");
+              history.push("/add");
             }}
           >
-            Users
+            Add Employee
           </Link>
-          {!isLoggedIn && (
-            <Link
-              className="mx-"
-              component="button"
-              variant="button"
-              color="secondary"
-              onClick={() => {
-                history.push("/register");
-              }}
-            >
-              Register
-            </Link>
-          )}
-          {isLoggedIn && (
-            <Link
-              className="mx-"
-              component="button"
-              variant="button"
-              color="secondary"
-              onClick={() => {
-                history.push("/add");
-              }}
-            >
-              Add Employee
-            </Link>
-          )}
-          {isLoggedIn && (
-            <Button
-              variant="contained"
-              className={`mx-3 ${classes.btn}`}
-              color="secondary"
-              onClick={async () => {
-                await props.logout();
-                history.push("/register");
-              }}
-            >
-              Logout
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
+        )}
+        {isLoggedIn && (
+          <Button
+            variant="contained"
+            className={` ${classes.link}`}
+            color="secondary"
+            onClick={async () => {
+              await props.logout();
+              history.push("/register");
+            }}
+          >
+            Logout
+          </Button>
+        )}
+      </Toolbar>
       {/* {combinedSate.isLoginOpen && (
         <SimpleDialog
           onClose={onClose}
@@ -152,7 +153,7 @@ const Header = (props) => {
           content={<Register />}
         />
       )} */}
-    </div>
+    </AppBar>
   );
 };
 const mapStateToProps = (state) => {
