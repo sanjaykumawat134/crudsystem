@@ -14,7 +14,9 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logout } from "../../store/Action/UserActions";
+import { toggleDialog, editEmployee } from "../../store/Action/EmpActions";
 import Add from "@material-ui/icons/Add";
+import User from "../User/User";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,8 +58,15 @@ const Header = (props) => {
   //     isRegisterOpen: false,
   //   });
   // };
+  const onClose = () => {
+    toggleDialog();
+  };
+  const addUserHandler = () => {
+    toggleDialog();
+  };
   const history = useHistory();
-  const { isLoggedIn } = props;
+  const { isLoggedIn, toggleDialog, isDialogOpen, editEmp, editEmployee } =
+    props;
   return (
     <AppBar position="static" color={"transparent"}>
       <Toolbar className="bg-blue-500">
@@ -120,9 +129,10 @@ const Header = (props) => {
             component="button"
             variant="button"
             color="secondary"
-            onClick={() => {
-              history.push("/add");
-            }}
+            // onClick={() => {
+            //   // history.push("/add");
+            // }}
+            onClick={addUserHandler}
           >
             <Add /> Employee
           </Link>
@@ -155,12 +165,21 @@ const Header = (props) => {
           content={<Register />}
         />
       )} */}
+      {isDialogOpen && (
+        <SimpleDialog
+          onClose={onClose}
+          open={isDialogOpen}
+          content={<User editEmpData={editEmp} editEmployee={editEmployee} />}
+        />
+      )}
     </AppBar>
   );
 };
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    isDialogOpen: state.employee.isDialogOpen,
+    editEmp: state.employee.editEmp,
   };
 };
 
@@ -170,6 +189,8 @@ const mapDispatchToProps = (dispatch) => {
       // login,
       // fetchUser,
       logout,
+      toggleDialog,
+      editEmployee,
     },
     dispatch
   );

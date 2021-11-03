@@ -76,323 +76,319 @@ const Form = (props) => {
   const classes = useStyles();
   return (
     <Paper elevation={6} className={"flex justify-center p-4"}>
-      <Card className={`flex ${classes.card}`} elevation={6}>
-        <form onSubmit={handleSubmit} style={{ width: "600px" }}>
-          {/* <div>General Information</div> */}
+      {/* <Card className={`flex ${classes.card}`} elevation={6}> */}
+      <form onSubmit={handleSubmit} style={{ width: "600px" }}>
+        {/* <div>General Information</div> */}
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="firstName"
-                name="firstName"
-                className="w-full"
-                error={touched.firstName && !!errors.firstName}
-                label="FirstName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.firstName}
-                helperText={
-                  touched.firstName && !!errors.firstName && errors.firstName
-                }
-                required
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="lastName"
-                name="lastName"
-                className="w-full"
-                error={touched.lastName && !!errors.lastName}
-                label="LastName"
-                required
-                onChange={handleChange}
-                value={values.lastName}
-                onBlur={handleBlur}
-                helperText={
-                  touched.lastName && !!errors.lastName && errors.lastName
-                }
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="firstName"
+              name="firstName"
+              className="w-full"
+              error={touched.firstName && !!errors.firstName}
+              label="FirstName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.firstName}
+              helperText={
+                touched.firstName && !!errors.firstName && errors.firstName
+              }
+              required
+            />
           </div>
-          {/* </div> */}
+          <div className="flex-1 mx-1">
+            <TextField
+              id="lastName"
+              name="lastName"
+              className="w-full"
+              error={touched.lastName && !!errors.lastName}
+              label="LastName"
+              required
+              onChange={handleChange}
+              value={values.lastName}
+              onBlur={handleBlur}
+              helperText={
+                touched.lastName && !!errors.lastName && errors.lastName
+              }
+            />
+          </div>
+        </div>
+        {/* </div> */}
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="email"
-                name="email"
-                className="w-full"
-                error={touched.email && !!errors.email}
-                label="Email"
-                required
-                onChange={handleChange}
-                value={values.email}
-                onBlur={handleBlur}
-                helperText={touched.email && !!errors.email && errors.email}
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="phoneNumber"
-                label="phoneNumber"
-                className="w-full"
-                error={touched.phoneNumber && !!errors.phoneNumber}
-                required
-                onChange={handleChange}
-                value={values.phoneNumber}
-                onBlur={handleBlur}
-                inputProps={{ maxLength: 10 }}
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                helperText={
-                  touched.phoneNumber &&
-                  !!errors.phoneNumber &&
-                  errors.phoneNumber
-                }
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="email"
+              name="email"
+              className="w-full"
+              error={touched.email && !!errors.email}
+              label="Email"
+              required
+              onChange={handleChange}
+              value={values.email}
+              onBlur={handleBlur}
+              helperText={touched.email && !!errors.email && errors.email}
+            />
           </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="phoneNumber"
+              label="phoneNumber"
+              className="w-full"
+              error={touched.phoneNumber && !!errors.phoneNumber}
+              required
+              onChange={handleChange}
+              value={values.phoneNumber}
+              onBlur={handleBlur}
+              inputProps={{ maxLength: 10 }}
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+              helperText={
+                touched.phoneNumber &&
+                !!errors.phoneNumber &&
+                errors.phoneNumber
+              }
+            />
+          </div>
+        </div>
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="dob"
-                name="dob"
-                className="w-full"
-                error={touched.dob && !!errors.dob}
-                label="DOB"
-                required
-                onChange={handleChange}
-                value={values.dob}
-                onBlur={handleBlur}
-                helperText={touched.dob && !!errors.dob && errors.dob}
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="birthPlace"
-                label="birthPlace"
-                className="w-full"
-                error={touched.birthPlace && !!errors.birthPlace}
-                required
-                onChange={handleChange}
-                value={values.birthPlace}
-                onBlur={handleBlur}
-                helperText={
-                  touched.birthPlace && !!errors.birthPlace && errors.birthPlace
-                }
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="dob"
+              name="dob"
+              className="w-full"
+              error={touched.dob && !!errors.dob}
+              label="DOB"
+              required
+              onChange={handleChange}
+              value={values.dob}
+              onBlur={handleBlur}
+              helperText={touched.dob && !!errors.dob && errors.dob}
+            />
           </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="birthPlace"
+              label="birthPlace"
+              className="w-full"
+              error={touched.birthPlace && !!errors.birthPlace}
+              required
+              onChange={handleChange}
+              value={values.birthPlace}
+              onBlur={handleBlur}
+              helperText={
+                touched.birthPlace && !!errors.birthPlace && errors.birthPlace
+              }
+            />
+          </div>
+        </div>
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="joinDate"
-                name="joinDate"
-                className="w-full"
-                error={touched.joinDate && !!errors.joinDate}
-                label="joinDate"
-                required
-                onChange={handleChange}
-                value={values.joinDate}
-                onBlur={handleBlur}
-                helperText={
-                  touched.joinDate && !!errors.joinDate && errors.joinDate
-                }
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="department"
-                label="department"
-                className="w-full"
-                error={touched.department && !!errors.department}
-                required
-                onChange={handleChange}
-                value={values.department}
-                onBlur={handleBlur}
-                helperText={
-                  touched.department && !!errors.department && errors.department
-                }
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="joinDate"
+              name="joinDate"
+              className="w-full"
+              error={touched.joinDate && !!errors.joinDate}
+              label="joinDate"
+              required
+              onChange={handleChange}
+              value={values.joinDate}
+              onBlur={handleBlur}
+              helperText={
+                touched.joinDate && !!errors.joinDate && errors.joinDate
+              }
+            />
           </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="department"
+              label="department"
+              className="w-full"
+              error={touched.department && !!errors.department}
+              required
+              onChange={handleChange}
+              value={values.department}
+              onBlur={handleBlur}
+              helperText={
+                touched.department && !!errors.department && errors.department
+              }
+            />
+          </div>
+        </div>
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="panCardNumber"
-                name="panCardNumber"
-                className="w-full"
-                error={touched.panCardNumber && !!errors.panCardNumber}
-                label="panCardNumber"
-                required
-                onChange={handleChange}
-                value={values.panCardNumber}
-                onBlur={handleBlur}
-                helperText={
-                  touched.panCardNumber &&
-                  !!errors.panCardNumber &&
-                  errors.panCardNumber
-                }
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="gender"
-                label="gender"
-                className="w-full"
-                error={touched.gender && !!errors.gender}
-                required
-                onChange={handleChange}
-                value={values.gender}
-                onBlur={handleBlur}
-                helperText={touched.gender && !!errors.gender && errors.gender}
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="panCardNumber"
+              name="panCardNumber"
+              className="w-full"
+              error={touched.panCardNumber && !!errors.panCardNumber}
+              label="panCardNumber"
+              required
+              onChange={handleChange}
+              value={values.panCardNumber}
+              onBlur={handleBlur}
+              helperText={
+                touched.panCardNumber &&
+                !!errors.panCardNumber &&
+                errors.panCardNumber
+              }
+            />
           </div>
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="salary"
-                name="salary"
-                className="w-full"
-                error={touched.salary && !!errors.salary}
-                label="salary"
-                required
-                onChange={handleChange}
-                value={values.salary}
-                onBlur={handleBlur}
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                helperText={touched.salary && !!errors.salary && errors.salary}
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="maritalStatus"
-                label="maritalStatus"
-                className="w-full"
-                error={touched.maritalStatus && !!errors.maritalStatus}
-                required
-                onChange={handleChange}
-                value={values.maritalStatus}
-                onBlur={handleBlur}
-                helperText={
-                  touched.maritalStatus &&
-                  !!errors.maritalStatus &&
-                  errors.maritalStatus
-                }
-              />
-            </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="gender"
+              label="gender"
+              className="w-full"
+              error={touched.gender && !!errors.gender}
+              required
+              onChange={handleChange}
+              value={values.gender}
+              onBlur={handleBlur}
+              helperText={touched.gender && !!errors.gender && errors.gender}
+            />
           </div>
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="country"
-                name="country"
-                className="w-full"
-                error={touched.country && !!errors.country}
-                label="country"
-                required
-                onChange={handleChange}
-                value={values.country}
-                onBlur={handleBlur}
-                helperText={
-                  touched.country && !!errors.country && errors.country
+        </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="salary"
+              name="salary"
+              className="w-full"
+              error={touched.salary && !!errors.salary}
+              label="salary"
+              required
+              onChange={handleChange}
+              value={values.salary}
+              onBlur={handleBlur}
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
                 }
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="state"
-                label="state"
-                className="w-full"
-                error={touched.state && !!errors.state}
-                required
-                onChange={handleChange}
-                value={values.state}
-                onBlur={handleBlur}
-                helperText={touched.state && !!errors.state && errors.state}
-              />
-            </div>
+              }}
+              helperText={touched.salary && !!errors.salary && errors.salary}
+            />
           </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="maritalStatus"
+              label="maritalStatus"
+              className="w-full"
+              error={touched.maritalStatus && !!errors.maritalStatus}
+              required
+              onChange={handleChange}
+              value={values.maritalStatus}
+              onBlur={handleBlur}
+              helperText={
+                touched.maritalStatus &&
+                !!errors.maritalStatus &&
+                errors.maritalStatus
+              }
+            />
+          </div>
+        </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="country"
+              name="country"
+              className="w-full"
+              error={touched.country && !!errors.country}
+              label="country"
+              required
+              onChange={handleChange}
+              value={values.country}
+              onBlur={handleBlur}
+              helperText={touched.country && !!errors.country && errors.country}
+            />
+          </div>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="state"
+              label="state"
+              className="w-full"
+              error={touched.state && !!errors.state}
+              required
+              onChange={handleChange}
+              value={values.state}
+              onBlur={handleBlur}
+              helperText={touched.state && !!errors.state && errors.state}
+            />
+          </div>
+        </div>
 
-          <div className="flex p-3">
-            <div className="flex-1 mx-1">
-              <TextField
-                id="district"
-                name="district"
-                className="w-full"
-                error={touched.district && !!errors.district}
-                label="district"
-                required
-                onChange={handleChange}
-                value={values.district}
-                onBlur={handleBlur}
-                helperText={
-                  touched.district && !!errors.district && errors.district
-                }
-              />
-            </div>
-            <div className="flex-1 mx-1">
-              <TextField
-                id="zipcode"
-                name="zipcode"
-                className="w-full"
-                error={touched.zipcode && !!errors.zipcode}
-                label="zipcode"
-                required
-                onChange={handleChange}
-                value={values.zipcode}
-                onBlur={handleBlur}
-                helperText={
-                  touched.zipcode && !!errors.zipcode && errors.zipcode
-                }
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-              />
-            </div>
+        <div className="flex p-3">
+          <div className="flex-1 mx-1">
+            <TextField
+              id="district"
+              name="district"
+              className="w-full"
+              error={touched.district && !!errors.district}
+              label="district"
+              required
+              onChange={handleChange}
+              value={values.district}
+              onBlur={handleBlur}
+              helperText={
+                touched.district && !!errors.district && errors.district
+              }
+            />
           </div>
-          {isSubmitting && (
-            <div>
-              <CircularProgress color="secondary" />
-            </div>
-          )}
-          <div className="sm:flex justify-center m-4">
-            <ButtonGroup>
-              <Button
-                color="primary"
-                variant="contained"
-                type="submit"
-                disabled={!dirty || isSubmitting || !isValid}
-                className="mx-1"
-              >
-                {editEmpData ? "Edit" : " Save"}
-              </Button>
-              <Button
-                color="secondary"
-                variant="contained"
-                type="reset"
-                className="mx-1"
-                onClick={() => {}}
-              >
-                Cancel
-              </Button>
-            </ButtonGroup>
+          <div className="flex-1 mx-1">
+            <TextField
+              id="zipcode"
+              name="zipcode"
+              className="w-full"
+              error={touched.zipcode && !!errors.zipcode}
+              label="zipcode"
+              required
+              onChange={handleChange}
+              value={values.zipcode}
+              onBlur={handleBlur}
+              helperText={touched.zipcode && !!errors.zipcode && errors.zipcode}
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+            />
           </div>
-        </form>
-      </Card>
+        </div>
+        {isSubmitting && (
+          <div>
+            <CircularProgress color="secondary" />
+          </div>
+        )}
+        <div className="sm:flex justify-center m-4">
+          <ButtonGroup>
+            <Button
+              color="primary"
+              variant="contained"
+              type="submit"
+              disabled={!dirty || isSubmitting || !isValid}
+              className="mx-1"
+            >
+              {editEmpData ? "Edit" : " Save"}
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              type="reset"
+              className="mx-1"
+              onClick={() => {}}
+            >
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </div>
+      </form>
+      {/* </Card> */}
     </Paper>
   );
 };

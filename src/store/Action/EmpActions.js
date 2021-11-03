@@ -4,9 +4,10 @@ import { getAuthToken } from "./UserActions";
 export const ADD_EMPLOYEE = "ADDEMPLOYEE";
 export const DELETE_EMPLOYEE = "DELETEEMPLOYEE";
 export const GETALL_EMPLOYEES = "GETALLEMPLOYEES";
-export const EDIT_EMPLOYEE = "EDIT_EMPLOYEE";
+export const EDIT_EMPLOYEE = "EDITEMPLOYEE";
 
-export const TOGGLE_EDIT_DIALOG = "TOGGLEEDITDIALOG";
+// export const TOGGLE_EDIT_DIALOG = "TOGGLEEDITDIALOG";
+export const TOGGLE_DIALOG = "TOGGLE_DIALOG";
 export const getAllEmployees = () => {
   return async (dispatch, getState) => {
     try {
@@ -41,7 +42,14 @@ export const addEmployee = (data) => {
           },
         }
       );
-      console.log("Response", resp);
+
+      if (resp.status === 201) {
+        console.log("dispatching action");
+        dispatch({
+          type: ADD_EMPLOYEE,
+          payload: resp.data.emp,
+        });
+      }
     } catch (error) {
       console.log("erro is", error);
     }
@@ -58,6 +66,12 @@ export const deleteEmployee = (empId) => {
           Authorization: token,
         },
       });
+      if (resp.status === 202) {
+        dispatch({
+          type: DELETE_EMPLOYEE,
+          payload: empId,
+        });
+      }
     } catch (error) {
       console.log("error of delete", error);
     }
@@ -78,7 +92,7 @@ export const getAddtionalData = (empId) => {
       });
       if (resp.status === 200) {
         dispatch({
-          type: TOGGLE_EDIT_DIALOG,
+          type: TOGGLE_DIALOG,
           payload: resp.data,
         });
       }
@@ -103,7 +117,23 @@ export const editEmployee = (empId, data) => {
           },
         }
       );
-      console.log("patch", resp);
+      console.log("response of edit", resp);
+      if (resp.status === 202) {
+        console.log("dispatch action", resp);
+        dispatch({
+          type: EDIT_EMPLOYEE,
+          payload: resp.data.updatedEmp,
+        });
+      }
     } catch (error) {}
+  };
+};
+
+export const toggleDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: TOGGLE_DIALOG,
+      payload: null,
+    });
   };
 };

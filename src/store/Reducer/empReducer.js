@@ -22,14 +22,68 @@ const empReducer = (state = intialState, action) => {
         }),
       };
     }
-    case Actions.TOGGLE_EDIT_DIALOG: {
+    // case Actions.TOGGLE_EDIT_DIALOG: {
+    //   return {
+    //     ...state,
+    //     isDialogOpen: !state.isDialogOpen,
+    //     editEmp: {
+    //       ...state.editEmp,
+    //       ...action.payload,
+    //     },
+    //   };
+    // }
+    case Actions.ADD_EMPLOYEE: {
+      const emp = {
+        id: action.payload._id,
+        dob: action.payload.dob,
+        email: action.payload.email,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+      };
+      return {
+        ...state,
+        empList: state.empList.concat(emp),
+      };
+    }
+    case Actions.EDIT_EMPLOYEE: {
+      console.log("Reducer");
+      const index = state.empList.findIndex(
+        (emp) => emp.id === action.payload._id
+      );
+      console.log("index of edit", index);
+      return {
+        ...state,
+        empList: [
+          ...state.empList.slice(0, index),
+          {
+            id: action.payload._id,
+            dob: action.payload.dob,
+            email: action.payload.email,
+            firstName: action.payload.firstName,
+            lastName: action.payload.lastName,
+          },
+          ...state.empList.slice(index),
+        ],
+      };
+    }
+    case Actions.DELETE_EMPLOYEE: {
+      return {
+        ...state,
+        empList: state.empList.filter((emp) => emp.id !== action.payload),
+      };
+    }
+
+    case Actions.TOGGLE_DIALOG: {
       return {
         ...state,
         isDialogOpen: !state.isDialogOpen,
-        editEmp: {
-          ...state.editEmp,
-          ...action.payload,
-        },
+        editEmp:
+          action.payload == null
+            ? null
+            : {
+                ...state.editEmp,
+                ...action.payload,
+              },
       };
     }
     default: {

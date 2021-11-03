@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UserListItem = (props) => {
   const classes = useStyles();
-  const [state, setstate] = useState(false);
+
   const {
     user,
     deleteEmployee,
@@ -67,16 +67,15 @@ const UserListItem = (props) => {
   const editEmpHandler = (empId) => async () => {
     // console.log("edit handler");
     await getAddtionalData(empId);
-    setstate(true);
   };
   return (
     <div
       key={user.id}
       className={` sm:flex-nowrap flex-wrap  items-center text-gray-800 text-base border-2 m-6 font-medium  ${classes.datarow} ${classes.data} ${classes.root}`}
     >
-      {isDialogOpen && (
+      {/* {isDialogOpen && (
         <User editEmpData={editEmp} editEmployee={editEmployee} />
-      )}
+      )} */}
       {/* {state && <User />} */}
       <div className="flex w-1/5">
         <Typography variant="subtitle1">{user.firstName}</Typography>
