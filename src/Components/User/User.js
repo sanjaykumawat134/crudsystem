@@ -409,9 +409,7 @@ const UserForm = withFormik({
       ? props.editEmpData.pan_card_no
       : "",
     gender: props?.editEmpData?.gender ? props.editEmpData.gender : "",
-    phoneNumber: props?.editEmpData?.detail_ref?.phone
-      ? props?.editEmpData?.detail_ref?.phone
-      : "",
+    phoneNumber: props?.editEmpData?.phone ? props?.editEmpData?.phone : "",
     email: props?.editEmpData?.email ? props.editEmpData.email : "",
     salary: props?.editEmpData?.detail_ref?.salary
       ? props?.editEmpData?.detail_ref?.salary

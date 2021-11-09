@@ -1,4 +1,9 @@
 import { useEffect } from "react";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import Typography from "@material-ui/core/Typography";
+import EmailIcon from "@material-ui/icons/Email";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { bindActionCreators } from "redux";
 import {
   getAllEmployees,
@@ -9,6 +14,7 @@ import {
 import { connect } from "react-redux";
 
 import UserListItem from "./UserListItem";
+import { Paper } from "@material-ui/core";
 
 const UserList = (props) => {
   const {
@@ -31,7 +37,34 @@ const UserList = (props) => {
     // }, [getAllEmployees, empList]
   }, []);
   return (
-    <div>
+    <Paper elevation={3}>
+      <div
+        className={` flex   items-center text-gray-800 text-base border-2 border-black m-6 font-medium`}
+      >
+        <div className="flex w-1/5">
+          <Typography variant="h6" className="flex-1">
+            First Name
+          </Typography>
+
+          <Typography variant="h6" className="flex-1">
+            Last Name
+          </Typography>
+        </div>
+
+        <div className="flex flex-1">
+          <Typography variant="h6">Email</Typography>
+        </div>
+
+        <div className="flex  w-1/5">
+          <Typography variant="h6" component="span">
+            DOB
+          </Typography>
+        </div>
+
+        <div className="flex  w-1/5">
+          <Typography variant="subtitle1">Actions</Typography>
+        </div>
+      </div>
       {empList.map((user) => (
         <UserListItem
           key={user.id}
@@ -43,7 +76,7 @@ const UserList = (props) => {
           isDialogOpen={isDialogOpen}
         />
       ))}
-    </div>
+    </Paper>
   );
 };
 const mapStateToProps = (state) => {

@@ -122,7 +122,7 @@ export const editEmployee = (empId, data) => {
         console.log("dispatch action", resp);
         dispatch({
           type: EDIT_EMPLOYEE,
-          payload: resp.data.updatedEmp,
+          payload: resp.data,
         });
       }
     } catch (error) {}

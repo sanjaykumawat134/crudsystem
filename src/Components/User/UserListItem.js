@@ -52,14 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const UserListItem = (props) => {
   const classes = useStyles();
 
-  const {
-    user,
-    deleteEmployee,
-    getAddtionalData,
-    editEmp,
-    isDialogOpen,
-    editEmployee,
-  } = props;
+  const { user, deleteEmployee, getAddtionalData } = props;
   // console.log("props", deleteEmployee);
   const deleteEmpHandler = (eid) => async () => {
     await deleteEmployee(eid);
@@ -78,9 +71,11 @@ const UserListItem = (props) => {
       )} */}
       {/* {state && <User />} */}
       <div className="flex w-1/5">
-        <Typography variant="subtitle1">{user.firstName}</Typography>
+        <Typography variant="subtitle1" className="flex-1">
+          {user.firstName}
+        </Typography>
 
-        <Typography variant="subtitle1" className="">
+        <Typography variant="subtitle1" className="flex-1">
           {user.lastName}
         </Typography>
       </div>
@@ -91,12 +86,7 @@ const UserListItem = (props) => {
       </div>
 
       <div className="flex  w-1/5">
-        <Typography
-          variant="subtitle1"
-          component="span"
-
-          // className=" border rounded-sm border-blue-500 px-10"
-        >
+        <Typography variant="subtitle1" component="span">
           {user.dob}
         </Typography>
       </div>

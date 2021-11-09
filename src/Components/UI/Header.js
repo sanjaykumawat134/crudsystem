@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Box, Icon, Link } from "@material-ui/core";
+import { Box, Icon, Link, Tooltip } from "@material-ui/core";
 import SimpleDialog from "./Dialog";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
@@ -100,17 +100,18 @@ const Header = (props) => {
             Login
           </Link> */}
         {/* )} */}
-
-        <Link
-          component="button"
-          className={` ${classes.link}`}
-          variant="button"
-          onClick={() => {
-            history.push("/users");
-          }}
-        >
-          Users
-        </Link>
+        {isLoggedIn && (
+          <Link
+            component="button"
+            className={` ${classes.link}`}
+            variant="button"
+            onClick={() => {
+              history.push("/users");
+            }}
+          >
+            Users
+          </Link>
+        )}
         {!isLoggedIn && (
           <Link
             className={` ${classes.link}`}
@@ -147,7 +148,9 @@ const Header = (props) => {
               history.push("/register");
             }}
           >
-            <Icon color="action">logout</Icon>
+            <Tooltip title="logout">
+              <Icon style={{ color: "#E52D23" }}>logout</Icon>
+            </Tooltip>
           </IconButton>
         )}
       </Toolbar>
@@ -169,6 +172,7 @@ const Header = (props) => {
         <SimpleDialog
           onClose={onClose}
           open={isDialogOpen}
+          title={`${editEmp !== null ? "Edit" : "Add"} User`}
           content={<User editEmpData={editEmp} editEmployee={editEmployee} />}
         />
       )}

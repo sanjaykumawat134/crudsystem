@@ -5,13 +5,15 @@ import Register from "../Auth/Register";
 import UserList from "../User/UserList";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import AllUsers from "../User/AllUsers";
 const Main = (props) => {
   const history = useHistory();
   const { isLoggedIn, editEmp } = props;
   return (
     <Switch>
       <Route path="/" exact="/">
-        <Redirect to="/login" />
+        {/* {isLoggedIn ? <Redirect to="/users" /> : <Redirect to="/login" />} */}
+        <Redirect to="/users" />
       </Route>
       {!isLoggedIn && (
         <Route path="/login">
@@ -23,11 +25,10 @@ const Main = (props) => {
           <Register />
         </Route>
       )}
-      <Route path="/users">
-        {isLoggedIn && <UserList />}
-        {!isLoggedIn && <div>You are not authenticated....</div>}
-      </Route>
-      <Route path="/add">{isLoggedIn && <User editEmpData={editEmp} />}</Route>
+      <Route path="/users" component={AllUsers} />
+      {/* {isLoggedIn && <UserList />} */}
+      {/* {!isLoggedIn && <div>You are not authenticated....</div>} */}
+      {/* <Route path="/add">{isLoggedIn && <User editEmpData={editEmp} />}</Route> */}
     </Switch>
   );
 };

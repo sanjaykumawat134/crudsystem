@@ -109,13 +109,7 @@ const Register = (props) => {
                 helperText={touched.email && !!errors.email && errors.email}
               />
             </div>
-            <div className="flex-col sm:flex-row m-5">
-              {isSubmitting && (
-                <div className="relative inset-x-1/2 bottom-1/4  flex flex-row w-full justify-center items-center m-8">
-                  <CircularProgress color="secondary" />
-                </div>
-              )}
-            </div>
+
             <div className="flex-col sm:flex-row m-5">
               <TextField
                 id="outlined-basic"
@@ -133,6 +127,13 @@ const Register = (props) => {
                   touched.password && !!errors.password && errors.password
                 }
               />
+            </div>
+            <div className="flex-col sm:flex-row m-5">
+              {isSubmitting && (
+                <div className=" flex flex-row w-full justify-center items-center">
+                  <CircularProgress color="secondary" />
+                </div>
+              )}
             </div>
             <div className="flex justify-center m-2 ">
               <ButtonGroup className={`m-1`}>
@@ -183,7 +184,6 @@ const EnhancedRegisterForm = withFormik({
   }),
   handleSubmit: async (values, { setSubmitting, props }) => {
     try {
-      console.log("values ", values);
       setSubmitting(true);
       const res = await props.register(values);
       setSubmitting(false);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Login from "../../Components/Auth/Login";
 
 export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";
@@ -6,6 +7,28 @@ export const LOGOUT = "LOGOUT";
 
 export const getAuthToken = () => {
   return "Bearer " + localStorage.getItem("authToken");
+};
+export const checkLogin = () => {
+  return async (dispatch) => {
+    try {
+      const token = getAuthToken();
+      const resp = await axios.get("http://localhost:3000/users/check_login", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (resp.status === 200) {
+        console.log("response of login", resp);
+        dispatch({
+          type: LOGIN,
+          payload: resp.data,
+        });
+      }
+    } catch (err) {
+      console.log("ERR: ", err);
+    }
+  };
 };
 export const login = ({ email, password }) => {
   return async (dispatch, getState) => {

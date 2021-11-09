@@ -17,6 +17,7 @@ const empReducer = (state = intialState, action) => {
             dob: emp.dob,
             email: emp.email,
             firstName: emp.firstName,
+            phone: emp.phone,
             lastName: emp.lastName,
           };
         }),
@@ -37,6 +38,7 @@ const empReducer = (state = intialState, action) => {
         id: action.payload._id,
         dob: action.payload.dob,
         email: action.payload.email,
+        phone: action.payload.phone,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
       };
@@ -46,24 +48,41 @@ const empReducer = (state = intialState, action) => {
       };
     }
     case Actions.EDIT_EMPLOYEE: {
-      console.log("Reducer");
-      const index = state.empList.findIndex(
-        (emp) => emp.id === action.payload._id
-      );
-      console.log("index of edit", index);
+      // const index = state.empList.findIndex(
+      //   (emp) => emp.id === action.payload._id
+      // );
+      // console.log("index of edit", index);
+      // return {
+      //   ...state,
+      //   empList: [
+      //     ...state.empList.slice(0, index),
+      //     {
+      //       id: action.payload._id,
+      //       dob: action.payload.dob,
+      //       email: action.payload.email,
+      //       firstName: action.payload.firstName,
+      //       lastName: action.payload.lastName,
+      //     },
+      //     ...state.empList.slice(index),
+      //   ],
       return {
         ...state,
-        empList: [
-          ...state.empList.slice(0, index),
-          {
-            id: action.payload._id,
-            dob: action.payload.dob,
-            email: action.payload.email,
-            firstName: action.payload.firstName,
-            lastName: action.payload.lastName,
-          },
-          ...state.empList.slice(index),
-        ],
+        empList: state.empList.map((emp) => {
+          if (emp.id !== action.payload._id) {
+            return emp;
+          }
+          return {
+            ...emp,
+            ...{
+              id: action.payload._id,
+              dob: action.payload.dob,
+              email: action.payload.email,
+              phone: action.payload.phone,
+              firstName: action.payload.firstName,
+              lastName: action.payload.lastName,
+            },
+          };
+        }),
       };
     }
     case Actions.DELETE_EMPLOYEE: {
