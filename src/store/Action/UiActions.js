@@ -1,8 +1,19 @@
-const FAILED = "FAILED";
+export const FAILED = "FAILED";
+export const RESET = "RESET";
 const SUCCESS = "SUCCESS";
 
-const OPENDELETEDIALOG = "OPENDELETEDIALOG";
-
-const failed = (msg) => {
-  return;
+export const failed = (msg) => {
+  return async (dispatch) => {
+    dispatch({
+      type: FAILED,
+      payload: msg,
+    });
+  };
+};
+export const reset = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: RESET,
+    });
+  };
 };

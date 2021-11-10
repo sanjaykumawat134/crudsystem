@@ -17,6 +17,13 @@ const UserReducer = (state = intialState, action) => {
         activeUser: action.payload,
       };
     }
+    case Actions.REGISTER: {
+      return {
+        ...state,
+        isLoggedIn: true,
+        activeUser: action.payload,
+      };
+    }
     case Actions.LOGOUT: {
       return {
         ...state,

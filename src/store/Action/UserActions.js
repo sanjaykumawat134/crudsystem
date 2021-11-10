@@ -1,6 +1,6 @@
 import axios from "axios";
 import Login from "../../Components/Auth/Login";
-
+import * as Actions from "./UiActions";
 export const LOGIN = "LOGIN";
 export const REGISTER = "REGISTER";
 export const LOGOUT = "LOGOUT";
@@ -53,7 +53,11 @@ export const login = ({ email, password }) => {
 
       return res.status;
     } catch (error) {
-      console.log("Error", error);
+      // console.log("Error", error);
+      dispatch({
+        type: Actions.FAILED,
+        payload: "something happened wrong ...!",
+      });
     }
   };
 };
@@ -66,14 +70,20 @@ export const register = ({ name, password, email }) => {
         password,
         email,
       });
-      if (resp.status === 200) {
+      if (resp.status === 201) {
+        localStorage.setItem("authToken", resp.data.token);
         dispatch({
           type: REGISTER,
           payload: resp.data.user,
         });
       }
       return resp.status;
-    } catch (error) {}
+    } catch (error) {
+      dispatch({
+        type: Actions.FAILED,
+        payload: "Email already taken",
+      });
+    }
   };
 };
 

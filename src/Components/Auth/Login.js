@@ -5,7 +5,7 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -16,8 +16,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // import { login } from "../../store/Action/UserActions";
 import { login } from "../../store/Action/UserActions";
+import { failed, reset } from "../../store/Action/UiActions";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+import { Icon } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: "5px",
-    padding: "5px",
+    // padding: "5px",
   },
   // btnGroup: {
   //   bottom: "10px",
@@ -48,9 +50,12 @@ const Login = (props) => {
     isValid,
     isSubmitting,
   } = props;
-
+  const customOnChange = (event) => {
+    props.reset();
+    handleChange(event);
+  };
   const classes = useStyles();
-
+  console.log("props", props);
   return (
     <div className={classes.root}>
       <Paper
@@ -69,9 +74,7 @@ const Login = (props) => {
         >
           {
             <Box fontWeightBold>
-              <Typography align={"center"} component={"h2"}>
-                Login Here
-              </Typography>
+              <Icon>account_circle</Icon>
             </Box>
           }
           <form onSubmit={handleSubmit}>
@@ -84,7 +87,8 @@ const Login = (props) => {
                 required
                 name="email"
                 error={touched.email && !!errors.email}
-                onChange={handleChange}
+                // onChange={handleChange}
+                onChange={customOnChange}
                 onBlur={handleBlur}
                 value={values.email}
                 helperText={touched.email && !!errors.email && errors.email}
@@ -99,7 +103,8 @@ const Login = (props) => {
                 name="password"
                 type="password"
                 error={touched.password && !!errors.password}
-                onChange={handleChange}
+                // onChange={handleChange}
+                onChange={customOnChange}
                 onBlur={handleBlur}
                 value={values.password}
                 fullWidth
@@ -115,6 +120,14 @@ const Login = (props) => {
                   <CircularProgress color="secondary" />
                 </div>
               )}
+            </div>
+            <div className="flex-col sm:flex-row ">
+              <div
+                className="flex flex-row w-full justify-center "
+                style={{ color: "red" }}
+              >
+                {props.msg}
+              </div>
             </div>
             <div className="flex m-2 justify-center">
               <ButtonGroup className={`m-1`}>
@@ -163,16 +176,19 @@ const EnhancedLoginForm = withFormik({
   }),
   handleSubmit: async (values, { setSubmitting, props }) => {
     try {
+      console.log("props", props);
       setSubmitting(true);
       const res = await props.login(values);
       setSubmitting(false);
       if (res === 200) {
+        alert("successfully logged in ...!");
         props.history.push("/users");
       } else {
         props.history.push("/login");
       }
     } catch (error) {
       // console.log("", error);
+      // props.failed("something went wrong ...!");
     }
   },
   displayName: "Login",
@@ -180,6 +196,8 @@ const EnhancedLoginForm = withFormik({
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    isOpen: state.ui.isOpen,
+    msg: state.ui.msg,
   };
 };
 
@@ -188,6 +206,8 @@ const mapDispatchToProps = (dispatch) => {
     {
       login,
       // fetchUser,
+      failed,
+      reset,
     },
     dispatch
   );

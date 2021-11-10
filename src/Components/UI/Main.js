@@ -6,6 +6,7 @@ import UserList from "../User/UserList";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import AllUsers from "../User/AllUsers";
+import UserInfo from "../User/UserInfo";
 const Main = (props) => {
   const history = useHistory();
   const { isLoggedIn, editEmp } = props;
@@ -22,10 +23,11 @@ const Main = (props) => {
       )}
       {!isLoggedIn && (
         <Route path="/register">
-          <Register />
+          <Register history={history} />
         </Route>
       )}
       <Route path="/users" component={AllUsers} />
+      <Route path="/user/:id" component={UserInfo} />
       {/* {isLoggedIn && <UserList />} */}
       {/* {!isLoggedIn && <div>You are not authenticated....</div>} */}
       {/* <Route path="/add">{isLoggedIn && <User editEmpData={editEmp} />}</Route> */}

@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 5px",
     textDecoration: "none",
   },
+  customIcon: {
+    fontSize: "2.2rem",
+    color: "white",
+  },
 }));
 
 const Header = (props) => {
@@ -69,8 +73,11 @@ const Header = (props) => {
     props;
   return (
     <AppBar position="static" color={"transparent"}>
-      <Toolbar className="bg-blue-500">
-        <IconButton
+      <Toolbar
+        // className="bg-blue-500"
+        style={{ backgroundColor: "#370000" }}
+      >
+        {/* <IconButton
           edge="start"
           // className="text-white"
           style={{ color: "white" }}
@@ -78,7 +85,7 @@ const Header = (props) => {
           aria-label="menu"
         >
           <MenuIcon />
-        </IconButton>
+        </IconButton> */}
         <Typography variant="h6" className={`${classes.title} text-white  `}>
           Employee system
         </Typography>
@@ -88,7 +95,7 @@ const Header = (props) => {
           <Button color="inherit" onClick={registerHandler}>
             Register
           </Button> */}
-        {/* {!isLoggedIn && (
+        {!isLoggedIn && (
           <Link
             className={`mx-3 ${classes.link}`}
             component="button"
@@ -97,59 +104,68 @@ const Header = (props) => {
               history.push("/login");
             }}
           >
-            Login
-          </Link> */}
-        {/* )} */}
+            <Tooltip title="Login">
+              <Icon className={`${classes.customIcon}`}>login</Icon>
+            </Tooltip>
+          </Link>
+        )}
         {isLoggedIn && (
-          <Link
-            component="button"
+          <IconButton
+            // component="button"
             className={` ${classes.link}`}
             variant="button"
             onClick={() => {
               history.push("/users");
             }}
           >
-            Users
-          </Link>
+            <Tooltip title="employees list">
+              <Icon className={`${classes.customIcon}`}>people_alt</Icon>
+            </Tooltip>
+          </IconButton>
         )}
         {!isLoggedIn && (
-          <Link
-            className={` ${classes.link}`}
-            component="button"
+          <IconButton
+            className={` ${classes.link} ${classes.customIcon}`}
             variant="button"
             onClick={() => {
               history.push("/register");
             }}
           >
-            Register
-          </Link>
+            <Tooltip title="register">
+              <Icon className={`${classes.customIcon}`}> app_registration</Icon>
+            </Tooltip>
+          </IconButton>
         )}
         {isLoggedIn && (
-          <Link
-            className={` ${classes.link}`}
-            component="button"
-            variant="button"
+          <IconButton
+            variant="contained"
+            className={` ${classes.link} ${classes.customIcon}`}
             color="secondary"
             // onClick={() => {
             //   // history.push("/add");
             // }}
+
             onClick={addUserHandler}
           >
-            <Add /> Employee
-          </Link>
+            <Tooltip title="add employee">
+              <Icon className={`${classes.customIcon}`}>group_add</Icon>
+            </Tooltip>
+          </IconButton>
         )}
         {isLoggedIn && (
           <IconButton
             variant="contained"
             className={` ${classes.link}`}
-            color="secondary"
+            // color="secondary"
             onClick={async () => {
-              await props.logout();
-              history.push("/register");
+              if (window.confirm("Are you sure to log out ?")) {
+                await props.logout();
+                history.push("/login");
+              }
             }}
           >
             <Tooltip title="logout">
-              <Icon style={{ color: "#E52D23" }}>logout</Icon>
+              <Icon className={`${classes.customIcon}`}>exit_to_app</Icon>
             </Tooltip>
           </IconButton>
         )}

@@ -7,6 +7,7 @@ import {
   makeStyles,
   Button,
   Paper,
+  TablePagination,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
+
 import {
   getAllEmployees,
   deleteEmployee,
@@ -60,6 +62,8 @@ const AllUsers = (props) => {
     open: false,
     empId: null,
   });
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
   const deleteEmpHandler = (eid) => async () => {
     setDeleteState({
       open: true,
@@ -67,6 +71,9 @@ const AllUsers = (props) => {
     });
 
     // await deleteEmployee(eid);
+  };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
   const onClose = () => {
     setDeleteState({
@@ -80,6 +87,11 @@ const AllUsers = (props) => {
   const deleteHandler = async () => {
     await deleteEmployee(deleteState.empId);
     onClose();
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   useEffect(() => {
@@ -97,101 +109,119 @@ const AllUsers = (props) => {
   }, [isLoggedIn]);
 
   return (
-    <Table className={classes.table}>
-      <TableHead>
-        <TableRow className={classes.thead}>
-          <TableCell>First Name</TableCell>
-          <TableCell>Last Name</TableCell>
-          <TableCell>Email</TableCell>
-          <TableCell>Phone</TableCell>
-          <TableCell>DOB</TableCell>
-          <TableCell>Actions</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {empList.length !== 0 ? (
-          empList.map((user) => (
+    <div elevation={3}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow className={classes.thead}>
+            <TableCell>First Name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>DOB</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {empList.length !== 0 ? (
+            empList
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((user) => (
+                <TableRow className={classes.row}>
+                  <TableCell>{user.firstName}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>{user.dob}</TableCell>
+                  <TableCell>
+                    <Tooltip title="Edit ">
+                      <IconButton
+                        className={`${classes.btn} ml-8`}
+                        onClick={editEmpHandler(user.id)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        className={`${classes.btn} ml-8`}
+                        onClick={deleteEmpHandler(user.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Additional_detail">
+                      <IconButton
+                        className={`${classes.btn} ml-8`}
+                        //   onClick={deleteEmpHandler(user.id)}
+                      >
+                        <Icon>more</Icon>
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))
+          ) : (
             <TableRow className={classes.row}>
-              <TableCell>{user.firstName}</TableCell>
-              <TableCell>{user.lastName}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.dob}</TableCell>
-              <TableCell>
-                <Tooltip title="Edit ">
-                  <IconButton
-                    className={`${classes.btn} ml-8`}
-                    onClick={editEmpHandler(user.id)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Delete">
-                  <IconButton
-                    className={`${classes.btn} ml-8`}
-                    onClick={deleteEmpHandler(user.id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Additional_detail">
-                  <IconButton
-                    className={`${classes.btn} ml-8`}
-                    //   onClick={deleteEmpHandler(user.id)}
-                  >
-                    <Icon>more</Icon>
-                  </IconButton>
-                </Tooltip>
+              <TableCell colSpan={6} style={{ width: "100%" }}>
+                <Paper
+                  elevation={3}
+                  className="flex"
+                  style={{
+                    padding: "50px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <h2> No users found ...! please add </h2>
+                </Paper>
               </TableCell>
             </TableRow>
-          ))
-        ) : (
-          <TableRow className={classes.row}>
-            <TableCell colSpan={6} style={{ width: "100%" }}>
-              <Paper
-                elevation={3}
-                className="flex"
-                style={{
-                  padding: "50px",
-                  justifyContent: "center",
-                }}
-              >
-                <h2> No users found ...! please add </h2>
-              </Paper>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-      {deleteState.open && (
-        <SimpleDialog
-          onClose={onClose}
-          open={deleteState.open}
-          title="Are you sure to delete employee ?"
-          content={
-            <div className="flex flex-col " style={{ width: "400px" }}>
-              <div
-                className="flex"
-                style={{ padding: "10px 0", fontSize: "1.5rem" }}
-              >
-                <h2>This action cannot be undone later....</h2>
-              </div>
-              <div className="flex justify-evenly" style={{ margin: "30px" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={deleteHandler}
+          )}
+        </TableBody>
+        {deleteState.open && (
+          <SimpleDialog
+            onClose={onClose}
+            open={deleteState.open}
+            title="Are you sure to delete employee ?"
+            content={
+              <div className="flex flex-col " style={{ width: "400px" }}>
+                <div
+                  className="flex"
+                  style={{ padding: "10px 0", fontSize: "1.5rem" }}
                 >
-                  Confirm
-                </Button>
-                <Button variant="contained" color="secondary" onClick={onClose}>
-                  Cancel
-                </Button>
+                  <h2>This action cannot be undone later....</h2>
+                </div>
+                <div className="flex justify-evenly" style={{ margin: "30px" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={deleteHandler}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={onClose}
+                  >
+                    Cancel
+                  </Button>
+                </div>
               </div>
-            </div>
-          }
-        />
-      )}
-    </Table>
+            }
+          />
+        )}
+      </Table>
+      <TablePagination
+        className={classes.table}
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={empList.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </div>
   );
 };
 

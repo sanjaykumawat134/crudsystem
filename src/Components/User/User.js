@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
-import { addEmployee } from "../../store/Action/EmpActions";
+import { addEmployee, toggleDialog } from "../../store/Action/EmpActions";
 
 import React from "react";
 import * as Yup from "yup";
@@ -381,7 +381,9 @@ const Form = (props) => {
               variant="contained"
               type="reset"
               className="mx-1"
-              onClick={() => {}}
+              onClick={() => {
+                props.toggleDialog();
+              }}
             >
               Cancel
             </Button>
@@ -459,13 +461,13 @@ const UserForm = withFormik({
       setSubmitting(true);
       // console.log("props gg", props);
       if (props.editEmpData) {
-        console.log("inside edit");
         await props.editEmployee(props.editEmpData._id, values);
 
         // return;
       } else {
         await props.addEmployee(values);
       }
+      props.toggleDialog();
       setSubmitting(false);
     } catch (error) {
       console.log("Error", error);
@@ -475,6 +477,6 @@ const UserForm = withFormik({
   displayName: "BasicForm",
 })(Form);
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ addEmployee }, dispatch);
+  return bindActionCreators({ addEmployee, toggleDialog }, dispatch);
 };
 export default connect(null, mapDispatchToProps)(UserForm);

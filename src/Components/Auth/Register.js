@@ -1,4 +1,4 @@
-import { CircularProgress, emphasize, Paper } from "@material-ui/core";
+import { CircularProgress, emphasize, Icon, Paper } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // import { login } from "../../store/Action/UserActions";
 import { login } from "../../store/Action/UserActions";
+import { failed, reset } from "../../store/Action/UiActions";
 import { useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
@@ -48,9 +49,13 @@ const Register = (props) => {
     isValid,
     isSubmitting,
   } = props;
-
+  console.log("props=>", props);
   const classes = useStyles();
-
+  const customOnChange = (event) => {
+    console.log("==>", event);
+    props.reset();
+    handleChange(event);
+  };
   return (
     <Paper className={classes.root}>
       <div
@@ -69,9 +74,7 @@ const Register = (props) => {
         >
           {
             <Box fontWeightBold>
-              <Typography align={"center"} component={"h2"}>
-                Register Here
-              </Typography>
+              <Icon>person_add</Icon>
             </Box>
           }
           <form
@@ -103,7 +106,7 @@ const Register = (props) => {
                 required
                 name="email"
                 error={touched.email && !!errors.email}
-                onChange={handleChange}
+                onChange={customOnChange}
                 onBlur={handleBlur}
                 value={values.email}
                 helperText={touched.email && !!errors.email && errors.email}
@@ -135,6 +138,14 @@ const Register = (props) => {
                 </div>
               )}
             </div>
+            <div className="flex-col sm:flex-row ">
+              <div
+                className="flex flex-row w-full justify-center "
+                style={{ color: "red" }}
+              >
+                {props.msg}
+              </div>
+            </div>
             <div className="flex justify-center m-2 ">
               <ButtonGroup className={`m-1`}>
                 <Button
@@ -153,7 +164,7 @@ const Register = (props) => {
                   type="reset"
                   onClick={() => {}}
                 >
-                  Cancel
+                  reset
                 </Button>
               </ButtonGroup>
             </div>
@@ -187,13 +198,14 @@ const EnhancedRegisterForm = withFormik({
       setSubmitting(true);
       const res = await props.register(values);
       setSubmitting(false);
-      if (res === 200) {
+      if (res === 201) {
         props.history.push("/users");
       } else {
         // props.history.push("/login");
       }
     } catch (error) {
-      console.log("", error);
+      console.log("error", error);
+      // props.failed(error.message);
     }
   },
   displayName: "Login",
@@ -201,6 +213,7 @@ const EnhancedRegisterForm = withFormik({
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    msg: state.ui.msg,
   };
 };
 
@@ -208,6 +221,8 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       register,
+      // failed,
+      reset,
     },
     dispatch
   );

@@ -8,6 +8,7 @@ export const EDIT_EMPLOYEE = "EDITEMPLOYEE";
 
 // export const TOGGLE_EDIT_DIALOG = "TOGGLEEDITDIALOG";
 export const TOGGLE_DIALOG = "TOGGLE_DIALOG";
+export const ADDITIONAL_DATA = "ADDITIONALDATA";
 export const getAllEmployees = () => {
   return async (dispatch, getState) => {
     try {
@@ -135,5 +136,25 @@ export const toggleDialog = () => {
       type: TOGGLE_DIALOG,
       payload: null,
     });
+  };
+};
+
+export const additionalInfo = (empId) => {
+  return async (dispatch) => {
+    const token = getAuthToken();
+    const resp = await axios.get("http://localhost:3000/emp/additonal_data", {
+      params: {
+        id: empId,
+      },
+      headers: {
+        Authorization: token,
+      },
+    });
+    if (resp.status === 200) {
+      dispatch({
+        type: ADDITIONAL_DATA,
+        payload: resp.data,
+      });
+    }
   };
 };
