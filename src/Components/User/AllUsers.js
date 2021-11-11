@@ -33,7 +33,8 @@ import SimpleDialog from "../UI/Dialog";
 const useStyle = makeStyles({
   table: {
     width: "90%",
-    margin: "50px 0 0 50px",
+    margin: "25px 0 0 25px",
+    boxShadow: "5px 5px 20px 0px black",
   },
   thead: {
     "& > *": {
@@ -47,6 +48,9 @@ const useStyle = makeStyles({
       fontSize: 17,
     },
   },
+  tColoumn: {
+    padding: "10px",
+  },
 });
 
 const AllUsers = (props) => {
@@ -57,6 +61,7 @@ const AllUsers = (props) => {
     deleteEmployee,
     getAddtionalData,
     isLoggedIn,
+    authenticating,
   } = props;
   const [deleteState, setDeleteState] = useState({
     open: false,
@@ -95,21 +100,28 @@ const AllUsers = (props) => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      props.history.push("/login");
-    } else {
-      const fetchData = async () => {
-        await getAllEmployees();
-      };
-      // if (empList.length === 0) {
-      fetchData();
-    }
+    console.log("isLoggedIn", isLoggedIn);
+    // if (!isLoggedIn && !authenticating) {
+    //   return props.history.push("/login");
+    // }
+    // else if (!isLoggedIn) {
+    //   return props.history.push("/login");
+    // }
+    // if (!isLoggedIn) {
+    //   return props.history.push("/login");
+    // } else {
+    const fetchData = async () => {
+      await getAllEmployees();
+    };
+    // if (empList.length === 0) {
+    fetchData();
+    // }
     // }
     // }, [getAllEmployees, empList]
-  }, [isLoggedIn]);
+  }, []);
 
   return (
-    <div elevation={3}>
+    <div style={{ padding: "25px" }}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow className={classes.thead}>
@@ -127,12 +139,20 @@ const AllUsers = (props) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => (
                 <TableRow className={classes.row}>
-                  <TableCell>{user.firstName}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.phone}</TableCell>
-                  <TableCell>{user.dob}</TableCell>
-                  <TableCell>
+                  <TableCell className={classes.tColoumn}>
+                    {user.firstName}
+                  </TableCell>
+                  <TableCell className={classes.tColoumn}>
+                    {user.lastName}
+                  </TableCell>
+                  <TableCell className={classes.tColoumn}>
+                    {user.email}
+                  </TableCell>
+                  <TableCell className={classes.tColoumn}>
+                    {user.phone}
+                  </TableCell>
+                  <TableCell className={classes.tColoumn}>{user.dob}</TableCell>
+                  <TableCell className={classes.tColoumn}>
                     <Tooltip title="Edit ">
                       <IconButton
                         className={`${classes.btn} ml-8`}
@@ -149,14 +169,14 @@ const AllUsers = (props) => {
                         <DeleteIcon />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Additional_detail">
+                    {/* <Tooltip title="Additional_detail">
                       <IconButton
                         className={`${classes.btn} ml-8`}
                         //   onClick={deleteEmpHandler(user.id)}
                       >
                         <Icon>more</Icon>
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                   </TableCell>
                 </TableRow>
               ))
@@ -186,7 +206,7 @@ const AllUsers = (props) => {
               <div className="flex flex-col " style={{ width: "400px" }}>
                 <div
                   className="flex"
-                  style={{ padding: "10px 0", fontSize: "1.5rem" }}
+                  style={{ padding: "10px 10px", fontSize: "1.5rem" }}
                 >
                   <h2>This action cannot be undone later....</h2>
                 </div>
@@ -212,6 +232,7 @@ const AllUsers = (props) => {
         )}
       </Table>
       <TablePagination
+        style={{ margin: "0", boxShadow: "none" }}
         className={classes.table}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
@@ -231,6 +252,7 @@ const mapStateToProps = (state) => {
     editEmp: state.employee.editEmp,
     isDialogOpen: state.employee.isDialogOpen,
     isLoggedIn: state.user.isLoggedIn,
+    authenticating: state.user.authenticating,
   };
 };
 const mapDispatchToProps = (dispatch) => {

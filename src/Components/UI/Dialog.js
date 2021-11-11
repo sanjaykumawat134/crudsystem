@@ -40,8 +40,13 @@ function SimpleDialog(props) {
       aria-labelledby="simple-dialog-title"
       open={open}
     >
-      <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
-      <DialogContent>{content}</DialogContent>
+      <DialogTitle
+        id="simple-dialog-title "
+        style={{ boxShadow: "3px 3px 10px" }}
+      >
+        {title}
+      </DialogTitle>
+      <DialogContent style={{ padding: "0" }}>{content}</DialogContent>
     </Dialog>
   );
 }

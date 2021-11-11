@@ -4,6 +4,7 @@ const intialState = {
   isLoggedIn: false,
   activeUser: null,
   authToken: null,
+  authenticating: true,
 };
 
 const UserReducer = (state = intialState, action) => {
@@ -15,6 +16,7 @@ const UserReducer = (state = intialState, action) => {
         ...state,
         isLoggedIn: true,
         activeUser: action.payload,
+        authenticating: false,
       };
     }
     case Actions.REGISTER: {
@@ -22,6 +24,7 @@ const UserReducer = (state = intialState, action) => {
         ...state,
         isLoggedIn: true,
         activeUser: action.payload,
+        authenticating: false,
       };
     }
     case Actions.LOGOUT: {
@@ -29,6 +32,7 @@ const UserReducer = (state = intialState, action) => {
         ...state,
         isLoggedIn: false,
         activeUser: null,
+        authenticating: true,
       };
     }
     default: {

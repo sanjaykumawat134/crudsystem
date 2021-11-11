@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import { addEmployee, toggleDialog } from "../../store/Action/EmpActions";
-
+import { failed, reset } from "../../store/Action/UiActions";
 import React from "react";
 import * as Yup from "yup";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
@@ -74,6 +74,10 @@ const Form = (props) => {
   } = props;
   console.log("props ", props);
   const classes = useStyles();
+  const customHandleChange = (event) => {
+    props.reset();
+    handleChange(event);
+  };
   return (
     <Paper elevation={6} className={"flex justify-center p-4"}>
       {/* <Card className={`flex ${classes.card}`} elevation={6}> */}
@@ -125,11 +129,12 @@ const Form = (props) => {
               error={touched.email && !!errors.email}
               label="Email"
               required
-              onChange={handleChange}
+              onChange={customHandleChange}
               value={values.email}
               onBlur={handleBlur}
               helperText={touched.email && !!errors.email && errors.email}
             />
+            <div className="text-red-600">{props.msg}</div>
           </div>
           <div className="flex-1 mx-1">
             <TextField
@@ -172,7 +177,7 @@ const Form = (props) => {
             />
           </div>
           <div className="flex-1 mx-1">
-            <TextField
+            {/* <TextField
               id="birthPlace"
               label="birthPlace"
               className="w-full"
@@ -184,13 +189,8 @@ const Form = (props) => {
               helperText={
                 touched.birthPlace && !!errors.birthPlace && errors.birthPlace
               }
-            />
-          </div>
-        </div>
-
-        <div className="flex p-3">
-          <div className="flex-1 mx-1">
-            <TextField
+            /> */}
+            {/* <TextField
               id="joinDate"
               name="joinDate"
               className="w-full"
@@ -203,9 +203,8 @@ const Form = (props) => {
               helperText={
                 touched.joinDate && !!errors.joinDate && errors.joinDate
               }
-            />
-          </div>
-          <div className="flex-1 mx-1">
+
+            /> */}
             <TextField
               id="department"
               label="department"
@@ -224,24 +223,20 @@ const Form = (props) => {
 
         <div className="flex p-3">
           <div className="flex-1 mx-1">
-            <TextField
-              id="panCardNumber"
-              name="panCardNumber"
+            {/* <TextField
+              id="joinDate"
+              name="joinDate"
               className="w-full"
-              error={touched.panCardNumber && !!errors.panCardNumber}
-              label="panCardNumber"
+              error={touched.joinDate && !!errors.joinDate}
+              label="joinDate"
               required
               onChange={handleChange}
-              value={values.panCardNumber}
+              value={values.joinDate}
               onBlur={handleBlur}
               helperText={
-                touched.panCardNumber &&
-                !!errors.panCardNumber &&
-                errors.panCardNumber
+                touched.joinDate && !!errors.joinDate && errors.joinDate
               }
-            />
-          </div>
-          <div className="flex-1 mx-1">
+            /> */}
             <TextField
               id="gender"
               label="gender"
@@ -254,9 +249,20 @@ const Form = (props) => {
               helperText={touched.gender && !!errors.gender && errors.gender}
             />
           </div>
-        </div>
-        <div className="flex p-3">
           <div className="flex-1 mx-1">
+            {/* <TextField
+              id="department"
+              label="department"
+              className="w-full"
+              error={touched.department && !!errors.department}
+              required
+              onChange={handleChange}
+              value={values.department}
+              onBlur={handleBlur}
+              helperText={
+                touched.department && !!errors.department && errors.department
+              }
+            /> */}
             <TextField
               id="salary"
               name="salary"
@@ -275,24 +281,8 @@ const Form = (props) => {
               helperText={touched.salary && !!errors.salary && errors.salary}
             />
           </div>
-          <div className="flex-1 mx-1">
-            <TextField
-              id="maritalStatus"
-              label="maritalStatus"
-              className="w-full"
-              error={touched.maritalStatus && !!errors.maritalStatus}
-              required
-              onChange={handleChange}
-              value={values.maritalStatus}
-              onBlur={handleBlur}
-              helperText={
-                touched.maritalStatus &&
-                !!errors.maritalStatus &&
-                errors.maritalStatus
-              }
-            />
-          </div>
         </div>
+
         <div className="flex p-3">
           <div className="flex-1 mx-1">
             <TextField
@@ -323,7 +313,7 @@ const Form = (props) => {
           </div>
         </div>
 
-        <div className="flex p-3">
+        {/* <div className="flex p-3">
           <div className="flex-1 mx-1">
             <TextField
               id="district"
@@ -359,13 +349,13 @@ const Form = (props) => {
               }}
             />
           </div>
-        </div>
+        </div> */}
         {isSubmitting && (
-          <div>
+          <div className="flex justify-center">
             <CircularProgress color="secondary" />
           </div>
         )}
-        <div className="sm:flex justify-center m-4">
+        <div className="sm:flex justify-center m-4" style={{ margin: "20px" }}>
           <ButtonGroup>
             <Button
               color="primary"
@@ -400,47 +390,47 @@ const UserForm = withFormik({
     firstName: props?.editEmpData?.firstName ? props.editEmpData.firstName : "",
     lastName: props?.editEmpData?.lastName ? props.editEmpData.lastName : "",
     dob: props?.editEmpData?.dob ? props.editEmpData.dob : "",
-    birthPlace: props?.editEmpData?.birth_place
-      ? props.editEmpData?.birth_place
-      : "",
-    joinDate: props?.editEmpData?.join_date ? props.editEmpData.join_date : "",
+    // birthPlace: props?.editEmpData?.birth_place
+    //   ? props.editEmpData?.birth_place
+    //   : "",
+    // joinDate: props?.editEmpData?.join_date ? props.editEmpData.join_date : "",
     department: props?.editEmpData?.detail_ref?.department
       ? props?.editEmpData?.detail_ref?.department
       : "",
-    panCardNumber: props?.editEmpData?.pan_card_no
-      ? props.editEmpData.pan_card_no
-      : "",
+    // panCardNumber: props?.editEmpData?.pan_card_no
+    //   ? props.editEmpData.pan_card_no
+    //   : "",
     gender: props?.editEmpData?.gender ? props.editEmpData.gender : "",
     phoneNumber: props?.editEmpData?.phone ? props?.editEmpData?.phone : "",
     email: props?.editEmpData?.email ? props.editEmpData.email : "",
     salary: props?.editEmpData?.detail_ref?.salary
       ? props?.editEmpData?.detail_ref?.salary
       : "",
-    maritalStatus: props.editEmpData?.maritial_status
-      ? props.editEmpData.maritial_status
-      : "",
+    // maritalStatus: props.editEmpData?.maritial_status
+    //   ? props.editEmpData.maritial_status
+    //   : "",
     country: props?.editEmpData?.detail_ref?.country
       ? props?.editEmpData?.detail_ref?.country
       : "",
     state: props?.editEmpData?.detail_ref?.state
       ? props?.editEmpData?.detail_ref?.state
       : "",
-    district: props?.editEmpData?.detail_ref?.district
-      ? props?.editEmpData?.detail_ref?.district
-      : "",
-    zipcode: props?.editEmpData?.detail_ref?.zip_code
-      ? props?.editEmpData?.detail_ref?.zip_code
-      : "",
+    // district: props?.editEmpData?.detail_ref?.district
+    //   ? props?.editEmpData?.detail_ref?.district
+    //   : "",
+    // zipcode: props?.editEmpData?.detail_ref?.zip_code
+    //   ? props?.editEmpData?.detail_ref?.zip_code
+    //   : "",
   }),
 
   validationSchema: Yup.object().shape({
     firstName: Yup.string().required("This field is required"),
     lastName: Yup.string().required("This field is required"),
     dob: Yup.string().required("This field is required"),
-    birthPlace: Yup.string().required("This field is required"),
-    joinDate: Yup.string().required("This field is required"),
+    // birthPlace: Yup.string().required("This field is required"),
+    // joinDate: Yup.string().required("This field is required"),
     department: Yup.string().required("This field is required"),
-    panCardNumber: Yup.string().required("This field is required"),
+    // panCardNumber: Yup.string().required("This field is required"),
     gender: Yup.string().required("This field is required"),
     phoneNumber: Yup.string()
       .required("This field is required")
@@ -448,12 +438,12 @@ const UserForm = withFormik({
     email: Yup.string()
       .required("This field is required")
       .email("Email is not valid"),
-    maritalStatus: Yup.string().required("This field is required"),
+    // maritalStatus: Yup.string().required("This field is required"),
     country: Yup.string().required("This field is required"),
     state: Yup.string().required("This field is required"),
-    district: Yup.string().required("This field is required"),
+    // district: Yup.string().required("This field is required"),
     salary: Yup.string().required("This field is required"),
-    zipcode: Yup.string().required("This field is required"),
+    // zipcode: Yup.string().required("This field is required"),
   }),
 
   handleSubmit: async (values, { setSubmitting, props }) => {
@@ -466,7 +456,9 @@ const UserForm = withFormik({
         // return;
       } else {
         await props.addEmployee(values);
+        return;
       }
+
       props.toggleDialog();
       setSubmitting(false);
     } catch (error) {
@@ -477,6 +469,11 @@ const UserForm = withFormik({
   displayName: "BasicForm",
 })(Form);
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ addEmployee, toggleDialog }, dispatch);
+  return bindActionCreators({ addEmployee, toggleDialog, reset }, dispatch);
 };
-export default connect(null, mapDispatchToProps)(UserForm);
+const mapStateToProps = (state) => {
+  return {
+    msg: state.ui.msg,
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

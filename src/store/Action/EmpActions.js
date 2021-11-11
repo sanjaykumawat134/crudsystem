@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FAILED } from "./UiActions";
 import { getAuthToken } from "./UserActions";
 
 export const ADD_EMPLOYEE = "ADDEMPLOYEE";
@@ -53,6 +54,10 @@ export const addEmployee = (data) => {
       }
     } catch (error) {
       console.log("erro is", error);
+      dispatch({
+        type: FAILED,
+        payload: "EMAIL ALREADY IN USE ...!",
+      });
     }
   };
 };

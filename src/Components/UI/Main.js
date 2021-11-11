@@ -7,9 +7,11 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import AllUsers from "../User/AllUsers";
 import UserInfo from "../User/UserInfo";
+import { PrivateRoute } from "../User/PrivateRoutes";
 const Main = (props) => {
   const history = useHistory();
   const { isLoggedIn, editEmp } = props;
+  console.log("isLoggedIn switch", isLoggedIn);
   return (
     <Switch>
       <Route path="/" exact="/">
@@ -18,7 +20,7 @@ const Main = (props) => {
       </Route>
       {!isLoggedIn && (
         <Route path="/login">
-          <Login history={history} />
+          <Login history={history} isLoggedIn={isLoggedIn} />
         </Route>
       )}
       {!isLoggedIn && (
@@ -26,8 +28,12 @@ const Main = (props) => {
           <Register history={history} />
         </Route>
       )}
-      <Route path="/users" component={AllUsers} />
-      <Route path="/user/:id" component={UserInfo} />
+      {/* {isLoggedIn && <Route path="/users" component={AllUsers} />} */}
+
+      <PrivateRoute path="/users">
+        <AllUsers />
+      </PrivateRoute>
+
       {/* {isLoggedIn && <UserList />} */}
       {/* {!isLoggedIn && <div>You are not authenticated....</div>} */}
       {/* <Route path="/add">{isLoggedIn && <User editEmpData={editEmp} />}</Route> */}

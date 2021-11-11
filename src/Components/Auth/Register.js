@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: "5px",
-    padding: "5px",
+    // padding: "5px",
   },
   // btnGroup: {
   //   bottom: "10px",
@@ -73,8 +73,11 @@ const Register = (props) => {
           }}
         >
           {
-            <Box fontWeightBold>
-              <Icon>person_add</Icon>
+            <Box
+              fontWeightBold
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Icon style={{ fontSize: "6rem" }}>person_add</Icon>
             </Box>
           }
           <form

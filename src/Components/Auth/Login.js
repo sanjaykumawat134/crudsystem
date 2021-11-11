@@ -5,7 +5,7 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -56,6 +56,11 @@ const Login = (props) => {
   };
   const classes = useStyles();
   console.log("props", props);
+  // useEffect(() => {
+  //   if (props.isLoggedIn) {
+  //     props.history.push("/users");
+  //   }
+  // }, []);
   return (
     <div className={classes.root}>
       <Paper
@@ -73,8 +78,11 @@ const Login = (props) => {
           }}
         >
           {
-            <Box fontWeightBold>
-              <Icon>account_circle</Icon>
+            <Box
+              fontWeightBold
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Icon style={{ fontSize: "6rem" }}>account_circle</Icon>
             </Box>
           }
           <form onSubmit={handleSubmit}>
@@ -176,7 +184,6 @@ const EnhancedLoginForm = withFormik({
   }),
   handleSubmit: async (values, { setSubmitting, props }) => {
     try {
-      console.log("props", props);
       setSubmitting(true);
       const res = await props.login(values);
       setSubmitting(false);
