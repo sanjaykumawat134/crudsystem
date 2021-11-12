@@ -373,6 +373,7 @@ const Form = (props) => {
               className="mx-1"
               onClick={() => {
                 props.toggleDialog();
+                props.reset();
               }}
             >
               Cancel
@@ -446,20 +447,21 @@ const UserForm = withFormik({
     // zipcode: Yup.string().required("This field is required"),
   }),
 
-  handleSubmit: async (values, { setSubmitting, props }) => {
+  handleSubmit: async (values, { setSubmitting, setErrors, props }) => {
     try {
       setSubmitting(true);
-      // console.log("props gg", props);
+      console.log("props gg", props);
       if (props.editEmpData) {
         await props.editEmployee(props.editEmpData._id, values);
-
-        // return;
       } else {
-        await props.addEmployee(values);
-        return;
+        const resp = await props.addEmployee(values);
+        if (!resp) {
+          setErrors({ email: "EMAIL ALREADY IN USE ...!" });
+          return;
+        }
       }
-
       props.toggleDialog();
+      props.reset();
       setSubmitting(false);
     } catch (error) {
       console.log("Error", error);

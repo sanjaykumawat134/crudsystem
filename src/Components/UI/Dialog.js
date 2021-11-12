@@ -14,12 +14,15 @@ import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import { blue } from "@material-ui/core/colors";
 import { DialogContent } from "@material-ui/core";
-
+import { Slide } from "@material-ui/core";
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600],
   },
+});
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function SimpleDialog(props) {
@@ -39,6 +42,9 @@ function SimpleDialog(props) {
       onClose={handleClose}
       aria-labelledby="simple-dialog-title"
       open={open}
+      // style={{ transition: "all 0.5S linear", transform: "translate(0, 40px)" }}
+      TransitionComponent={Transition}
+      keepMounted
     >
       <DialogTitle
         id="simple-dialog-title "

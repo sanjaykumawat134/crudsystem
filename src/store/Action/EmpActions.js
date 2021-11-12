@@ -51,13 +51,15 @@ export const addEmployee = (data) => {
           type: ADD_EMPLOYEE,
           payload: resp.data.emp,
         });
+        return true;
+      } else {
+        return false;
       }
     } catch (error) {
-      console.log("erro is", error);
-      dispatch({
-        type: FAILED,
-        payload: "EMAIL ALREADY IN USE ...!",
-      });
+      // dispatch({
+      //   type: FAILED,
+      //   payload: "EMAIL ALREADY IN USE ...!",
+      // });
     }
   };
 };
