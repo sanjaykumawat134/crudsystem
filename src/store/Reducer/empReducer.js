@@ -4,23 +4,41 @@ const intialState = {
   empList: [],
   isDialogOpen: false,
   editEmp: null,
+  totalRecords: 0,
 };
 
 const empReducer = (state = intialState, action) => {
   switch (action.type) {
+    // case Actions.GETALL_EMPLOYEES: {
+    //   return {
+    //     ...state,
+    //     empList: action.payload.map((emp) => {
+    //       return {
+    //         id: emp._id,
+    //         dob: emp.dob,
+    //         email: emp.email,
+    //         firstName: emp.firstName,
+    //         phone: emp.phone,
+    //         lastName: emp.lastName,
+    //       };
+    //     }),
+    //   };
+    // }
     case Actions.GETALL_EMPLOYEES: {
+      const eList = action.payload.employees.map((emp) => {
+        return {
+          id: emp._id,
+          dob: emp.dob,
+          email: emp.email,
+          firstName: emp.firstName,
+          phone: emp.phone,
+          lastName: emp.lastName,
+        };
+      });
       return {
         ...state,
-        empList: action.payload.map((emp) => {
-          return {
-            id: emp._id,
-            dob: emp.dob,
-            email: emp.email,
-            firstName: emp.firstName,
-            phone: emp.phone,
-            lastName: emp.lastName,
-          };
-        }),
+        empList: state.empList.concat(eList),
+        totalRecords: action.payload.totalCounts,
       };
     }
     // case Actions.TOGGLE_EDIT_DIALOG: {

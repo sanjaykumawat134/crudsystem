@@ -1,3 +1,4 @@
+import "date-fns";
 import Button from "@material-ui/core/Button/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup/ButtonGroup";
 import Card from "@material-ui/core/Card/Card";
@@ -11,12 +12,20 @@ import { failed, reset } from "../../store/Action/UiActions";
 import React from "react";
 import * as Yup from "yup";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import { withFormik } from "formik";
 import { Paper } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 const useStyles = makeStyles((theme) => ({
   commonUtilities: {
     marginLeft: "1rem",
@@ -69,15 +78,18 @@ const Form = (props) => {
     handleSubmit,
     dirty,
     isValid,
+    setValues,
     isSubmitting,
     editEmpData,
   } = props;
   console.log("props ", props);
+
   const classes = useStyles();
   const customHandleChange = (event) => {
     props.reset();
     handleChange(event);
   };
+
   return (
     <Paper elevation={6} className={"flex justify-center p-4"}>
       {/* <Card className={`flex ${classes.card}`} elevation={6}> */}
@@ -163,7 +175,32 @@ const Form = (props) => {
 
         <div className="flex p-3">
           <div className="flex-1 mx-1">
-            <TextField
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                style={{ margin: "0" }}
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="dob"
+                name="dob"
+                label="DOB"
+                value={values.dob}
+                onChange={(event) => {
+                  console.log("value: ", event);
+                  setValues({
+                    ...values,
+                    dob: new Date(event).toISOString(),
+                  });
+                }}
+                // onBlur={handleBlur}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                // error={touched.dob && !!errors.dob}
+              />
+            </MuiPickersUtilsProvider>
+            {/* <TextField
               id="dob"
               name="dob"
               className="w-full"
@@ -174,7 +211,7 @@ const Form = (props) => {
               value={values.dob}
               onBlur={handleBlur}
               helperText={touched.dob && !!errors.dob && errors.dob}
-            />
+            /> */}
           </div>
           <div className="flex-1 mx-1">
             {/* <TextField
@@ -237,7 +274,7 @@ const Form = (props) => {
                 touched.joinDate && !!errors.joinDate && errors.joinDate
               }
             /> */}
-            <TextField
+            {/* <TextField
               id="gender"
               label="gender"
               className="w-full"
@@ -247,7 +284,28 @@ const Form = (props) => {
               value={values.gender}
               onBlur={handleBlur}
               helperText={touched.gender && !!errors.gender && errors.gender}
-            />
+            /> */}
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Gender</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="gender"
+                value={values.gender}
+                onChange={handleChange}
+                style={{ display: "flex", flexDirection: "row" }}
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+              </RadioGroup>
+            </FormControl>
           </div>
           <div className="flex-1 mx-1">
             {/* <TextField
@@ -390,7 +448,8 @@ const UserForm = withFormik({
   mapPropsToValues: (props) => ({
     firstName: props?.editEmpData?.firstName ? props.editEmpData.firstName : "",
     lastName: props?.editEmpData?.lastName ? props.editEmpData.lastName : "",
-    dob: props?.editEmpData?.dob ? props.editEmpData.dob : "",
+    // dob: props?.editEmpData?.dob ? props.editEmpData.dob : "",
+    dob: props?.editEmpData?.dob ? props.editEmpData.dob : new Date(),
     // birthPlace: props?.editEmpData?.birth_place
     //   ? props.editEmpData?.birth_place
     //   : "",
@@ -427,7 +486,7 @@ const UserForm = withFormik({
   validationSchema: Yup.object().shape({
     firstName: Yup.string().required("This field is required"),
     lastName: Yup.string().required("This field is required"),
-    dob: Yup.string().required("This field is required"),
+    // dob: Yup.string().required("This field is required"),
     // birthPlace: Yup.string().required("This field is required"),
     // joinDate: Yup.string().required("This field is required"),
     department: Yup.string().required("This field is required"),

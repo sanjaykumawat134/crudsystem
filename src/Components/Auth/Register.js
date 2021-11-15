@@ -15,6 +15,13 @@ import { useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { register } from "../../store/Action/UserActions";
+import { useState } from "react";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 import * as Yup from "yup";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,13 +55,23 @@ const Register = (props) => {
     dirty,
     isValid,
     isSubmitting,
+    setValues,
   } = props;
+  const [showPassword, setshowPassword] = useState(false);
   console.log("props=>", props);
   const classes = useStyles();
   const customOnChange = (event) => {
     console.log("==>", event);
     props.reset();
     handleChange(event);
+  };
+
+  const handleClickShowPassword = () => {
+    setshowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
   return (
     <Paper className={classes.root}>
@@ -117,7 +134,7 @@ const Register = (props) => {
             </div>
 
             <div className="flex-col sm:flex-row m-5">
-              <TextField
+              {/* <TextField
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
@@ -132,7 +149,38 @@ const Register = (props) => {
                 helperText={
                   touched.password && !!errors.password && errors.password
                 }
+              /> */}
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                className="w-full"
+                type={showPassword ? "text" : "password"}
+                value={values.password}
+                error={touched.password && !!errors.password}
+                onChange={(event) => {
+                  setValues({ ...values, password: event.target.value });
+                }}
+                onBlur={handleBlur}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
               />
+              <div className="text-red-600">
+                {/* error {touched.password && !!errors.password && errors.password} */}
+                {errors.password}
+              </div>
             </div>
             <div className="flex-col sm:flex-row m-5">
               {isSubmitting && (

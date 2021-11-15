@@ -20,6 +20,13 @@ import { failed, reset } from "../../store/Action/UiActions";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Icon } from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import IconButton from "@material-ui/core/IconButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -49,18 +56,28 @@ const Login = (props) => {
     dirty,
     isValid,
     isSubmitting,
+    setValues,
   } = props;
   const customOnChange = (event) => {
     props.reset();
     handleChange(event);
   };
   const classes = useStyles();
-  console.log("props", props);
+  console.log("props", errors);
   // useEffect(() => {
   //   if (props.isLoggedIn) {
   //     props.history.push("/users");
   //   }
   // }, []);
+
+  const [showPassword, setshowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setshowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <div className={classes.root}>
       <Paper
@@ -104,7 +121,7 @@ const Login = (props) => {
             </div>
 
             <div className="flex-col sm:flex-row m-5">
-              <TextField
+              {/* <TextField
                 id="outlined-basic"
                 label="password"
                 variant="outlined"
@@ -119,8 +136,39 @@ const Login = (props) => {
                 required
                 helperText={
                   touched.password && !!errors.password && errors.password
+                } */}
+
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                className="w-full"
+                type={showPassword ? "text" : "password"}
+                value={values.password}
+                error={touched.password && !!errors.password}
+                onChange={(event) => {
+                  setValues({ ...values, password: event.target.value });
+                }}
+                onBlur={handleBlur}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
                 }
+                label="Password"
               />
+              <div className="text-red-600">
+                {/* error {touched.password && !!errors.password && errors.password} */}
+                {errors.password}
+              </div>
             </div>
             <div className="flex-col sm:flex-row ">
               {isSubmitting && (

@@ -52,7 +52,29 @@ const useStyle = makeStyles({
     padding: "10px",
   },
 });
+const getFormatedDate = (date) => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const dateObj = new Date(date);
+  const month = monthNames[dateObj.getMonth()];
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const year = String(dateObj.getFullYear());
+  const output = month + "\n" + day + "," + year;
 
+  return output;
+};
 const AllUsers = (props) => {
   const classes = useStyle();
   const {
@@ -61,13 +83,13 @@ const AllUsers = (props) => {
     deleteEmployee,
     getAddtionalData,
     isLoggedIn,
-    authenticating,
+    totalRecords,
   } = props;
   const [deleteState, setDeleteState] = useState({
     open: false,
     empId: null,
   });
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
   const [page, setPage] = useState(0);
   const deleteEmpHandler = (eid) => async () => {
     setDeleteState({
@@ -77,7 +99,8 @@ const AllUsers = (props) => {
 
     // await deleteEmployee(eid);
   };
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = async (event, newPage) => {
+    await getAllEmployees();
     setPage(newPage);
   };
   const onClose = () => {
@@ -95,12 +118,13 @@ const AllUsers = (props) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
+    console.log("handleChangeRowsPerPage");
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
   useEffect(() => {
-    console.log("isLoggedIn", isLoggedIn);
+    // console.log("isLoggedIn", isLoggedIn);
     // if (!isLoggedIn && !authenticating) {
     //   return props.history.push("/login");
     // }
@@ -113,9 +137,9 @@ const AllUsers = (props) => {
     const fetchData = async () => {
       await getAllEmployees();
     };
-    // if (empList.length === 0) {
-    fetchData();
-    // }
+    if (empList.length === 0) {
+      fetchData();
+    }
     // }
     // }, [getAllEmployees, empList]
   }, []);
@@ -151,7 +175,9 @@ const AllUsers = (props) => {
                   <TableCell className={classes.tColoumn}>
                     {user.phone}
                   </TableCell>
-                  <TableCell className={classes.tColoumn}>{user.dob}</TableCell>
+                  <TableCell className={classes.tColoumn}>
+                    {getFormatedDate(user.dob)}
+                  </TableCell>
                   <TableCell className={classes.tColoumn}>
                     <Tooltip title="Edit ">
                       <IconButton
@@ -236,7 +262,8 @@ const AllUsers = (props) => {
         className={classes.table}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={empList.length}
+        // count={empList.length}
+        count={totalRecords}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -251,6 +278,7 @@ const mapStateToProps = (state) => {
     empList: state.employee.empList,
     editEmp: state.employee.editEmp,
     isDialogOpen: state.employee.isDialogOpen,
+    totalRecords: state.employee.totalRecords,
     isLoggedIn: state.user.isLoggedIn,
     authenticating: state.user.authenticating,
   };

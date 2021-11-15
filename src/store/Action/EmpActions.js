@@ -14,11 +14,17 @@ export const getAllEmployees = () => {
   return async (dispatch, getState) => {
     try {
       const token = getAuthToken();
-      const resp = await axios.get("http://localhost:3000/emp/all", {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const state = getState();
+      const skip = state.employee.empList.length;
+      console.log("skip", skip);
+      const resp = await axios.get(
+        `http://localhost:3000/emp/all?skip=${skip}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       console.log("response of get employee", resp);
       if (resp.status === 200 && resp.statusText === "OK") {
         dispatch({
