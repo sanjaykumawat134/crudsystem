@@ -41,6 +41,7 @@ const empReducer = (state = intialState, action) => {
         totalRecords: action.payload.totalCounts,
       };
     }
+
     // case Actions.TOGGLE_EDIT_DIALOG: {
     //   return {
     //     ...state,
